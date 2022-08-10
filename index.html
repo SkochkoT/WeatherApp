@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Weather App</title>
+    <meta charset="UTF-8" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <link href="src/styles.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <form class="search-form" id="search-form">
+            <div class="row search-city">
+              <div class="col-6">
+                <input
+                  type="text"
+                  class="form-control city-name"
+                  placeholder="Enter your city"
+                  autofocus
+                  id="search-city-form"
+                />
+              </div>
+              <div class="col-2">
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+              <div class="col-2">
+                <button
+                  type="submit"
+                  class="btn btn-success"
+                  id="current-location"
+                >
+                  Current
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="card-smaller current-forecast">
+            <div class="row">
+              <div class="col-auto current-city">
+                <h1></h1>
+                <ul>
+                  <li>(Updated at <span id="day-time"></span>)</li>
+                  <li id="weather"></li>
+                </ul>
+              </div>
+              <div class="col-auto current-weather" id="weather">
+                <ul>
+                  <li>Humidity: <span id="humidity"></span>%</li>
+                  <li>Wind: <span id="wind"></span>m/s</li>
+                </ul>
+              </div>
+              <div class="col-auto current-weather-icon">
+                <img src="" alt="" width="120px" id="weather-icon" />
+              </div>
+              <div class="col-auto current-temperature">
+                <h4>
+                  <div class="minicard-text">
+                    <span class="maxtemp" id="temperature"></span>
+                    <span class="units"
+                      ><a href="#" id="celsius-link" class="active">°C</a> |
+                      <a href="#" id="fahrenheit-link">°F</a></span
+                    >
+                  </div>
+                </h4>
+              </div>
+            </div>
+
+            <div class="choose-forecast">
+              <div class="row">
+                <div class="col-2">day</div>
+                <div class="col-2">
+                  <strong><em>5 days</em></strong>
+                </div>
+                <div class="col-2">month</div>
+              </div>
+            </div>
+
+            <div class="row border border-secondary rounded week-forecast">
+              <div class="col">
+                <div class="minicard">
+                  <div class="minicard-body">
+                    <h5 class="minicard-title">Sat</h5>
+                    <img src="icons/01d.svg" class="card-img-top" alt="..." />
+                    <div class="minicard-text">
+                      <span class="maxtemp"> 26°C /</span>
+                      <span class="mintemp"> 17°C </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="minicard">
+                  <div class="minicard-body">
+                    <h5 class="minicard-title">Sun</h5>
+                    <img src="icons/01d.svg" class="card-img-top" alt="..." />
+                    <div class="minicard-text">
+                      <span class="maxtemp"> 24°C /</span>
+                      <span class="mintemp"> 16°C </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="minicard">
+                  <div class="minicard-body">
+                    <h5 class="minicard-title">Mon</h5>
+                    <img src="icons/01d.svg" class="card-img-top" alt="..." />
+                    <div class="minicard-text">
+                      <span class="maxtemp"> 23°C /</span>
+                      <span class="mintemp"> 15°C </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="minicard">
+                  <div class="minicard-body">
+                    <h5 class="minicard-title">Tue</h5>
+                    <img src="icons/01d.svg" class="card-img-top" alt="..." />
+                    <div class="minicard-text">
+                      <span class="maxtemp"> 23°C /</span>
+                      <span class="mintemp"> 13°C </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="minicard">
+                  <div class="minicard-body">
+                    <h5 class="minicard-title">Wed</h5>
+                    <img src="icons/01d.svg" class="card-img-top" alt="..." />
+                    <div class="minicard-text">
+                      <span class="maxtemp"> 24°C /</span>
+                      <span class="mintemp"> 14°C </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <small>
+        <a href="https://github.com/SkochkoT/weatherApp-project" target="_blank"
+          >Open-sourced on GitHub</a
+        >, coded by Tetiana Skochko
+      </small>
+    </div>
+    <script src="src/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+body {
+  font-family: sans-serif;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+h4 {
+  text-align: center;
+  padding: 20px 5px;
+  margin: 10px 5px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  cursor: default;
+}
+
+div.current-weather {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  margin-top: 30px;
+}
+
+.city-name {
+  background: transparent;
+}
+
+.card {
+  background-color: #fed1be;
+  max-width: 700px;
+}
+
+.minicard {
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+}
+
+.minicard-title {
+  font-weight: bold;
+}
+
+.search-form {
+  margin-bottom: 20px;
+}
+
+.maxtemp {
+  font-weight: bold;
+}
+
+.card-img-top {
+  width: 100px;
+}
+
+.current-temperature .maxtemp {
+  font-size: 56px;
+}
+
+.current-temperature .units {
+  position: relative;
+  top: -30px;
+  font-size: 16px;
+}
+
+.current-temperature .active {
+  color: black;
+}
+
+.current-temperature .active:hover {
+  text-decoration: none;
+}
