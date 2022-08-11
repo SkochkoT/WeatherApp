@@ -16,7 +16,37 @@ function formatDate(timestamp) {
   return `${day}, ${hours}:${minutes}`;
 }
 
-function displayWeather(response) {
+function showForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let days = ["Thu", "Fri", "Sat", "Sun", "Mon"];
+
+  let forecastHTML = `<div class="row">`;
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+    <div class="minicard col-2">
+                <h5 class="forecast-date">${day}</h5>
+                <img
+                  src="icons/01d.svg"
+                  class="forecast-icon"
+                  alt=""
+                  width="60px"
+                />
+                <div class="forecast-temp">
+                  <span class="maxtemp"> 26°C /</span>
+                  <span class="mintemp"> 17°C </span>
+                </div>
+              </div>
+    `;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
+function showWeather(response) {
   let currentCity = document.querySelector("h1");
   let showTemp = document.querySelector("#temperature");
   let showWeather = document.querySelector("#weather");
@@ -40,7 +70,7 @@ function displayWeather(response) {
 function search(nameOfCity) {
   let apiKey = "c475d7b28899306359b30750ca522e5c";
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${nameOfCity}&appid=${apiKey}&units=metric`;
-  axios.get(url).then(displayWeather);
+  axios.get(url).then(showWeather);
 }
 
 function showCity(event) {
@@ -54,7 +84,7 @@ function showPosition(position) {
   let lat = position.coords.latitude;
   let lon = position.coords.longitude;
   let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
-  axios.get(url).then(displayWeather);
+  axios.get(url).then(showWeather);
 }
 
 function currentLocation(event) {
@@ -96,3 +126,4 @@ let currentPosition = document.querySelector("#current-location");
 currentPosition.addEventListener("click", currentLocation);
 
 search("Kyiv");
+showForecast();

@@ -50,11 +50,10 @@ div.current-weather {
 
 .minicard {
   text-align: center;
-  display: block;
   margin: 0 auto;
 }
 
-.minicard-title {
+.forecast-date {
   font-weight: bold;
 }
 
