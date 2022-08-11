@@ -16,34 +16,57 @@ function formatDate(timestamp) {
   return `${day}, ${hours}:${minutes}`;
 }
 
-function showForecast() {
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
+}
+
+function showForecast(response) {
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
 
-  let days = ["Thu", "Fri", "Sat", "Sun", "Mon"];
+  //let days = ["Thu", "Fri", "Sat", "Sun", "Mon"];
 
   let forecastHTML = `<div class="row">`;
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `
     <div class="minicard col-2">
-                <h5 class="forecast-date">${day}</h5>
+                <h5 class="forecast-date">${formatDay(forecastDay.dt)}</h5>
                 <img
-                  src="icons/01d.svg"
+                  src="icons/${forecastDay.weather[0].icon}.svg"
                   class="forecast-icon"
                   alt=""
                   width="60px"
                 />
                 <div class="forecast-temp">
-                  <span class="maxtemp"> 26°C /</span>
-                  <span class="mintemp"> 17°C </span>
+                  <span class="maxtemp"> ${Math.round(
+                    forecastDay.temp.max
+                  )}° /</span>
+                  <span class="mintemp"> ${Math.round(
+                    forecastDay.temp.min
+                  )}° </span>
                 </div>
               </div>
     `;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+}
+
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = "c475d7b28899306359b30750ca522e5c";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  console.log(apiUrl);
+  axios.get(apiUrl).then(showForecast);
 }
 
 function showWeather(response) {
@@ -65,6 +88,8 @@ function showWeather(response) {
   dayTime.innerHTML = formatDate(response.data.dt * 1000);
   showIcon.setAttribute("src", `icons/${response.data.weather[0].icon}.svg`);
   showIcon.setAttribute("alt", response.data.weather[0].description);
+
+  getForecast(response.data.coord);
 }
 
 function search(nameOfCity) {
@@ -126,4 +151,4 @@ let currentPosition = document.querySelector("#current-location");
 currentPosition.addEventListener("click", currentLocation);
 
 search("Kyiv");
-showForecast();
+//showForecast();
