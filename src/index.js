@@ -1,6 +1,14 @@
 function formatDate(timestamp) {
   let date = new Date(timestamp);
-  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   let day = days[date.getDay()];
 
   let hours = date.getHours();
@@ -30,27 +38,24 @@ function showForecast(response) {
 
   let forecastHTML = `<div class="row">`;
   forecast.forEach(function (forecastDay, index) {
-    if (index < 6) {
+    //celsiusMaxtemp = forecastDay.temp.max;
+    //celsiusMintemp = forecastDay.temp.min;
+    if (index > 0 && index < 6) {
       forecastHTML =
         forecastHTML +
         `
     <div class="minicard col-2">
-                <h5 class="forecast-date">${formatDay(forecastDay.dt)}</h5>
-                <img
-                  src="icons/${forecastDay.weather[0].icon}.svg"
-                  class="forecast-icon"
-                  alt=""
-                  width="60px"
-                />
-                <div class="forecast-temp">
-                  <span class="maxtemp"> ${Math.round(
-                    forecastDay.temp.max
-                  )}° /</span>
-                  <span class="mintemp"> ${Math.round(
-                    forecastDay.temp.min
-                  )}° </span>
-                </div>
-              </div>
+      <h5 class="forecast-date">${formatDay(forecastDay.dt)}</h5>
+        <img
+        src="icons/${forecastDay.weather[0].icon}.svg"
+        class="forecast-icon"
+        alt=""
+        width="60px"/>
+      <div class="forecast-temp">
+          <span class="maxtemp"> ${Math.round(forecastDay.temp.max)}° /</span>
+          <span class="mintemp"> ${Math.round(forecastDay.temp.min)}° </span>
+      </div>
+    </div>
     `;
     }
   });
@@ -59,9 +64,9 @@ function showForecast(response) {
   forecastElement.innerHTML = forecastHTML;
 }
 
-function getForecast(coordinates) {
+function getForecast(coordinates, units) {
   let apiKey = "c475d7b28899306359b30750ca522e5c";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(showForecast);
 }
 
@@ -85,7 +90,8 @@ function showWeather(response) {
   showIcon.setAttribute("src", `icons/${response.data.weather[0].icon}.svg`);
   showIcon.setAttribute("alt", response.data.weather[0].description);
 
-  getForecast(response.data.coord);
+  coords = response.data.coord;
+  getForecast(coords, "metric");
 }
 
 function search(nameOfCity) {
@@ -119,17 +125,22 @@ function convertToFahrenheit(event) {
 
   celsiusLink.classList.remove("active");
   fahrenheitLink.classList.add("active");
-  let fahrenheit = celsiusTemperature * 1.8 + 32;
+  let fahrenheit = (celsiusTemperature * 9) / 5 + 32;
   temperatureElement.innerHTML = Math.round(fahrenheit);
+
+  getForecast(coords, "imperial");
 }
 
 function convertToCelsius(event) {
   event.preventDefault();
   let temperatureElement = document.querySelector("#temperature");
+
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
   //let celsius = (temperatureElement.innerHTML - 32) / 1.8;
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
+
+  getForecast(coords, "metric");
 }
 
 let celsiusTemperature = null;
